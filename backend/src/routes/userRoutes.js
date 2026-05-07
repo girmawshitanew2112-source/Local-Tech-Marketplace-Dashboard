@@ -1,0 +1,10 @@
+import express from 'express';
+import { deleteUser, getUser, listUsers, updateUser } from '../controllers/userController.js';
+import { authorize, protect } from '../middleware/authMiddleware.js';
+const router = express.Router();
+router.use(protect);
+router.get('/', authorize('admin'), listUsers);
+router.get('/:id', getUser);
+router.patch('/:id', updateUser);
+router.delete('/:id', authorize('admin'), deleteUser);
+export default router;
